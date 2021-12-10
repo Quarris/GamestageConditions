@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:loot_table",
+              "name": "minecraft:chests/end_city_treasure",
+              "conditions": [
+                {
+                  "condition": "gamestageconditions:stage",
+                  "stage": "stage_2"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "name": "minecraft:chests/ruined_portal",
+              "conditions": [
+                {
+                  "condition": "gamestageconditions:stage",
+                  "stage": "stage_1"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:loot_table",
+              "name": "minecraft:chests/jungle_temple"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
