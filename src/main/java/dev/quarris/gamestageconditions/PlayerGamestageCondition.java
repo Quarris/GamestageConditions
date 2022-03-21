@@ -29,11 +29,18 @@ public class PlayerGamestageCondition implements ILootCondition {
     }
 
     @Override
-    public boolean test(LootContext lootContext) {
-        Entity thisEntity = lootContext.get(LootParameters.THIS_ENTITY);
-        if (!(thisEntity instanceof PlayerEntity))
+    public boolean test(LootContext ctx) {
+        Entity testEntity;
+        if (ctx.has(LootParameters.KILLER_ENTITY)) {
+            testEntity = ctx.get(LootParameters.KILLER_ENTITY);
+        } else {
+            testEntity = ctx.get(LootParameters.THIS_ENTITY);
+        }
+
+        if (!(testEntity instanceof PlayerEntity))
             return false;
-        return GameStageHelper.hasStage((PlayerEntity) thisEntity, this.stage);
+
+        return GameStageHelper.hasStage((PlayerEntity) testEntity, this.stage);
     }
 
     public static PlayerGamestageCondition.Builder builder(String stage) {
