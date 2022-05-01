@@ -1,0 +1,31 @@
+{
+  "parent": "gamestageconditionstest:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:gold_ingot"
+    },
+    "title": {
+      "translate": "Gamestage Removed"
+    },
+    "description": {
+      "translate": "Gamestage Removed"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "added": {
+      "trigger": "gamestageconditions:gamestage_removed",
+      "conditions": {
+        "stage": "test_1"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "added"
+    ]
+  ]
+}

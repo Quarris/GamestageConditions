@@ -1,0 +1,31 @@
+{
+  "parent": "gamestageconditionstest:root",
+  "display": {
+    "icon": {
+      "item": "minecraft:iron_ingot"
+    },
+    "title": {
+      "translate": "Gamestage Added"
+    },
+    "description": {
+      "translate": "Gamestage Added"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "added": {
+      "trigger": "gamestageconditions:gamestage_added",
+      "conditions": {
+        "stage": "test_1"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "added"
+    ]
+  ]
+}
