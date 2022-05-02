@@ -1,27 +1,23 @@
 package dev.quarris.gamestageconditions;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 
-public class GamestageTrigger extends AbstractCriterionTrigger<GamestageTrigger.Instance> {
+public class GamestageTrigger extends SimpleCriterionTrigger<GamestageTrigger.TriggerInstance> {
     private final ResourceLocation id;
     public GamestageTrigger(ResourceLocation id) {
         this.id = id;
     }
 
-    public void trigger(ServerPlayerEntity player, String stage) {
-        this.triggerListeners(player, (instance) -> instance.test(stage));
+    public void trigger(ServerPlayer player, String stage) {
+        this.trigger(player, (instance) -> instance.test(stage));
     }
 
     @Override
-    protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate playerPredicate, ConditionArrayParser conditionsParser) {
-        return new Instance(this.getId(), playerPredicate, json.get("stage").getAsString());
+    protected TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite playerPredicate, DeserializationContext conditionsParser) {
+        return new TriggerInstance(this.getId(), playerPredicate, json.get("stage").getAsString());
     }
 
     @Override
@@ -29,10 +25,10 @@ public class GamestageTrigger extends AbstractCriterionTrigger<GamestageTrigger.
         return this.id;
     }
 
-    public static class Instance extends CriterionInstance {
+    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
         private final String stage;
 
-        public Instance(ResourceLocation id, EntityPredicate.AndPredicate player, String stage) {
+        public TriggerInstance(ResourceLocation id, EntityPredicate.Composite player, String stage) {
             super(id, player);
             this.stage = stage;
         }
@@ -41,8 +37,8 @@ public class GamestageTrigger extends AbstractCriterionTrigger<GamestageTrigger.
             return this.stage.equals(stage);
         }
 
-        public JsonObject serialize(ConditionArraySerializer conditions) {
-            JsonObject jsonobject = super.serialize(conditions);
+        public JsonObject serialize(SerializationContext conditions) {
+            JsonObject jsonobject = super.serializeToJson(conditions);
             jsonobject.addProperty("stage", this.stage);
             return jsonobject;
         }

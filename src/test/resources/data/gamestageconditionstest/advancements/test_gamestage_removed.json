@@ -16,7 +16,7 @@
     "hidden": false
   },
   "criteria": {
-    "added": {
+    "removed": {
       "trigger": "gamestageconditions:gamestage_removed",
       "conditions": {
         "stage": "test_1"
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "added"
+      "removed"
     ]
   ]
 }

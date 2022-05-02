@@ -1,6 +1,6 @@
 package dev.quarris.gamestageconditions;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModRef {
 
