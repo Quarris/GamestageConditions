@@ -6,10 +6,7 @@ import com.google.gson.JsonSerializationContext;
 import net.darkhax.gamestages.GameStageHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
 
@@ -30,17 +27,19 @@ public class PlayerGamestageCondition implements ILootCondition {
 
     @Override
     public boolean test(LootContext ctx) {
-        Entity testEntity;
-        if (ctx.has(LootParameters.KILLER_ENTITY)) {
-            testEntity = ctx.get(LootParameters.KILLER_ENTITY);
-        } else {
-            testEntity = ctx.get(LootParameters.THIS_ENTITY);
+        return this.validEntity(ctx, LootParameters.KILLER_ENTITY) ||
+            this.validEntity(ctx, LootParameters.THIS_ENTITY);
+    }
+
+    private boolean validEntity(LootContext ctx, LootParameter<Entity> param) {
+        if (ctx.has(param)) {
+            Entity e = ctx.get(param);
+            if (e instanceof PlayerEntity) {
+                return GameStageHelper.hasStage((PlayerEntity) e, this.stage);
+            }
         }
 
-        if (!(testEntity instanceof PlayerEntity))
-            return false;
-
-        return GameStageHelper.hasStage((PlayerEntity) testEntity, this.stage);
+        return false;
     }
 
     public static PlayerGamestageCondition.Builder builder(String stage) {
