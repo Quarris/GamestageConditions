@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
@@ -29,17 +30,19 @@ public class PlayerGamestageCondition implements LootItemCondition {
 
     @Override
     public boolean test(LootContext ctx) {
-        Entity testEntity;
-        if (ctx.hasParam(LootContextParams.KILLER_ENTITY)) {
-            testEntity = ctx.getParam(LootContextParams.KILLER_ENTITY);
-        } else {
-            testEntity = ctx.getParam(LootContextParams.THIS_ENTITY);
+        return this.validEntity(ctx, LootContextParams.KILLER_ENTITY) ||
+               this.validEntity(ctx, LootContextParams.THIS_ENTITY);
+    }
+
+    private boolean validEntity(LootContext ctx, LootContextParam<Entity> param) {
+        if (ctx.hasParam(param)) {
+            Entity e = ctx.getParam(param);
+            if (e instanceof Player) {
+                return GameStageHelper.hasStage((Player) e, this.stage);
+            }
         }
 
-        if (!(testEntity instanceof Player))
-            return false;
-
-        return GameStageHelper.hasStage((Player) testEntity, this.stage);
+        return false;
     }
 
     public static PlayerGamestageCondition.Builder builder(String stage) {
