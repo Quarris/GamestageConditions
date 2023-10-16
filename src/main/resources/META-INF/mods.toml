@@ -45,7 +45,7 @@ Adds a test condition for data driven content such as loot tables.
 [[dependencies.gamestageconditions]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,1.19)"
+    versionRange="[1.19.2,)"
     ordering="NONE"
     side="BOTH"
 
