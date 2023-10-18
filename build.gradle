@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.18.2-2.1'
+version = '1.19.2-3.0'
 group = 'dev.quarris.gamestageconditions'
 archivesBaseName = 'gamestageconditions'
 
@@ -20,7 +20,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
 
-    mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'official', version: '1.19.2'
     runs {
         client {
             workingDirectory project.file('run')
@@ -63,9 +63,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
-    implementation fg.deobf('net.darkhax.gamestages:GameStages-Forge-1.18.2:8.0.1')
-    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.18.2:13.0.9")
+    minecraft 'net.minecraftforge:forge:1.19.2-43.2.14'
+    implementation fg.deobf('net.darkhax.gamestages:GameStages-Forge-1.19.2:11.1.4')
+    runtimeOnly fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-1.19.2:16.3.20")
 }
 
 jar {
